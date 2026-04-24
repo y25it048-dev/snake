@@ -1,56 +1,50 @@
-import React, { useState } from 'react';
-import SnakeGame from './components/SnakeGame';
-import MusicPlayer from './components/MusicPlayer';
-import { Track } from './types';
+import React from 'react';
+import { MusicPlayer } from './components/MusicPlayer';
+import { SnakeGame } from './components/SnakeGame';
+import { Terminal } from 'lucide-react';
 
 const App: React.FC = () => {
-    const [score, setScore] = useState(0);
-    const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
-
     return (
-        <div className="min-h-screen bg-neon-dark flex flex-col font-sans relative overflow-hidden">
-            {/* Background Effects */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-neon-purple/10 blur-[120px] rounded-full mix-blend-screen"></div>
-                <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-neon-cyan/10 blur-[150px] rounded-full mix-blend-screen"></div>
-                
-                {/* Grid lines for retro feel */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [transform:perspective(500px)_rotateX(60deg)] origin-bottom opacity-30"></div>
-            </div>
+        <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col relative overflow-hidden font-sans selection:bg-neon-magenta selection:text-white">
+            
+            {/* Background Grid Effect */}
+            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" 
+                 style={{
+                     backgroundImage: `linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)`,
+                     backgroundSize: '40px 40px',
+                     perspective: '1000px',
+                     transform: 'rotateX(60deg) translateY(-100px) scale(2)',
+                     transformOrigin: 'top center'
+                 }}
+            />
 
-            {/* Header / Scoreboard */}
-            <header className="w-full p-6 flex justify-between items-center z-10 relative">
-                <div className="flex flex-col">
-                    <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple tracking-tighter uppercase drop-shadow-[0_0_10px_rgba(5,217,232,0.5)]">
-                        Synth<span className="text-neon-pink">Snake</span>
-                    </h1>
-                    {currentTrack && (
-                        <p className="text-xs text-gray-400 font-mono mt-1 animate-pulse">
-                            Now Playing: {currentTrack.title}
-                        </p>
-                    )}
-                </div>
-                
-                <div className="bg-black/60 border border-neon-cyan/50 px-6 py-2 rounded-lg shadow-[0_0_15px_rgba(5,217,232,0.3)] backdrop-blur-sm">
-                    <span className="text-gray-400 font-mono text-sm mr-2">SCORE</span>
-                    <span className="text-2xl font-bold text-neon-cyan font-mono">{score.toString().padStart(4, '0')}</span>
-                </div>
+            {/* Header */}
+            <header className="relative z-10 w-full p-6 flex justify-center items-center border-b border-gray-800 bg-black/50 backdrop-blur-md">
+                <h1 className="text-3xl md:text-4xl font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-magenta flex items-center gap-4 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
+                    <Terminal className="text-neon-cyan" size={36} />
+                    SYNTH_SNAKE_OS
+                </h1>
             </header>
 
             {/* Main Content Area */}
-            <main className="flex-1 flex flex-col lg:flex-row items-center justify-center gap-8 p-4 z-10 relative">
+            <main className="relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-center gap-8 p-4 md:p-8 max-w-7xl mx-auto w-full">
                 
-                {/* Game Container */}
-                <div className="flex-1 flex justify-center items-center w-full">
-                    <SnakeGame onScoreChange={setScore} />
+                {/* Left/Top: Game Area */}
+                <div className="flex-1 flex justify-center items-center w-full order-2 lg:order-1">
+                    <SnakeGame />
                 </div>
 
-                {/* Music Player Container - Positioned at bottom on mobile, side on desktop */}
-                <div className="w-full lg:w-auto lg:absolute lg:bottom-8 lg:right-8 flex justify-center z-20">
-                    <MusicPlayer onTrackChange={setCurrentTrack} />
+                {/* Right/Bottom: Music Player Area */}
+                <div className="w-full lg:w-96 flex justify-center items-start lg:items-center order-1 lg:order-2">
+                    <MusicPlayer />
                 </div>
-                
+
             </main>
+
+            {/* Footer */}
+            <footer className="relative z-10 p-4 text-center text-gray-600 text-xs font-mono border-t border-gray-900 bg-black/80">
+                v1.0.0 // NEON PROTOCOL ACTIVE // AUDIO SYNTHESIS ONLINE
+            </footer>
         </div>
     );
 };
