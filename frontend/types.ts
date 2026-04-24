@@ -4,16 +4,16 @@ export interface Point {
 }
 
 export interface Track {
-    id: number;
+    id: string;
     title: string;
     artist: string;
     url: string;
     duration: string;
 }
 
-export enum Direction {
-    UP = 'UP',
-    DOWN = 'DOWN',
-    LEFT = 'LEFT',
-    RIGHT = 'RIGHT'
+export enum GameState {
+    IDLE,
+    PLAYING,
+    PAUSED,
+    GAME_OVER
 }
